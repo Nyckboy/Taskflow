@@ -13,7 +13,7 @@ export default function Tooltip() {
         }
     }, [useLayout]);
 
-    // Version useLayoutEffect — pas de flash
+    // Version useLayoutEffect — pas de flash//
     useLayoutEffect(() => {
         if (!useLayout) return;
         if (buttonRef.current) {
