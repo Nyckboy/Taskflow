@@ -1,73 +1,36 @@
-# Compte Rendu TP4 : MUI vs Bootstrap & Architecture BDD
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-**École :** EMSI (École Marocaine des Sciences de l'Ingénieur) - Cycle d'Ingénieur
-**Projet :** TaskFlow
+## Getting Started
 
----
+First, run the development server:
 
-## 🎨 Partie 1 à 4 : Analyse de l'UI (MUI vs Bootstrap)
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-**Q1 : Lignes de CSS pour le Header MUI** 
-0 ligne de CSS externe. Tout le style est injecté via la prop `sx` (CSS-in-JS). Un fichier CSS classique nécessiterait environ 20 à 40 lignes.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-**Q2 : Comparaison de code (MUI vs Bootstrap)** 
-* **Plus court :** Bootstrap, grâce à ses classes utilitaires concises.
-* **Lisibilité :** Bootstrap est plus lisible pour le HTML/CSS traditionnel. MUI est plus orienté objet/composant, mais le JSX peut vite devenir verbeux.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-**Q3 : Préférence de style (`sx` vs `className`)** 
-* *(À personnaliser)* La prop `sx` (MUI) est excellente pour centraliser la logique dynamique en JS. Les `className` (Bootstrap) allègent le JSX et séparent bien la structure du design.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
+## Learn More
 
-## 📊 Partie 5 : Tableau Comparatif 
+To learn more about Next.js, take a look at the following resources:
 
-| Critère  | Material UI  | React-Bootstrap  |
-| :--- | :--- | :--- |
-| **Installation**  | Lourde (multiples packages) | Légère (`bootstrap`, `react-bootstrap`) |
-| **Composants utilisés**  | Nombreux (`Box`, `Typography` wrappers) | Basique (Balises HTML standards) |
-| **Lignes CSS externes**  | 0 | 0 |
-| **Système de style**  | CSS-in-JS (prop `sx`) | Classes utilitaires |
-| **Personnalisation**  | `ThemeProvider` global (puissant) | Surcharge de variables SCSS |
-| **Responsive**  | Objet dans la prop `sx` | Classes dédiées (ex: `col-md-6`) |
-| **Lisibilité**  | JSX verbeux | JSX épuré, chaînes de classes longues |
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-**Q4 : Choix pour la production** 
-* **MUI :** Pour des applications complexes nécessitant un Design System robuste et des composants avancés.
-* **Bootstrap :** Pour un développement rapide et un bundle plus léger.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
----
+## Deploy on Vercel
 
-## ⚙️ Partie 6 : Architecture BDD
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-**Schémas d'architecture :** 
-* **Actuel :** React (5173) `<-HTTP->` Axios `<-HTTP->` json-server (4000) `<->` `db.json`
-* **Firebase :** React `<-SDK Firebase (WebSockets/HTTPS)->` Cloud Firebase
-* **Express + DB :** React `<-HTTP->` Serveur Express `<-TCP->` MongoDB/MySQL
-
-**Q5 : Pourquoi React ne se connecte pas directement à MySQL ?** 
-1. **Sécurité :** Les identifiants DB seraient visibles dans le code source côté client.
-2. **Protocole :** Les navigateurs utilisent HTTP, SQL utilise des protocoles TCP spécifiques.
-
-**Q6 : Inconvénients de json-server en production** 
-1. Aucune scalabilité (goulot d'étranglement sur un seul fichier).
-2. Aucune sécurité ni authentification.
-3. Ne gère pas les requêtes/jointures complexes.
-
-**Q7 : Comment Firebase permet la connexion directe ?** 
-Firebase est un Backend-as-a-Service. Il expose une API HTTP/WebSockets sécurisée. La sécurité est assurée côté serveur par des règles validant les tokens d'authentification des utilisateurs.
-
----
-
-## 🧠 Partie 7 : Questions de Réflexion
-
-**Q8 : Étapes pour passer en production** 
-1. Créer un vrai backend (Node.js, Spring Boot) ou utiliser un BaaS.
-2. Migrer vers une BDD robuste (PostgreSQL, MongoDB).
-3. Implémenter une authentification sécurisée (JWT).
-4. Mettre à jour l'URL de base d'Axios.
-
-**Q9 : Risques des librairies externes** 
-Augmentation drastique de la taille du bundle JavaScript (ralentit le chargement) et risque de dépendance ("vendor lock-in") en cas de mises à jour bloquantes.
-
-**Q10 : Choix pour un Chat en temps réel** 
-**Firebase** (ou Backend custom avec WebSockets). `json-server` utilise du HTTP standard (le client doit demander les données), tandis que Firebase utilise des WebSockets pour "pousser" les messages en temps réel.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
