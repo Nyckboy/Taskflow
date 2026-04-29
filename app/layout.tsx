@@ -1,6 +1,9 @@
 import { cookies } from 'next/headers';
+import { Inter } from 'next/font/google';
 
 import LogoutButton from './components/LogoutButton';
+
+const inter = Inter({ subsets: ['latin'] });
 export default async function RootLayout({
   children,
 }: {
@@ -11,7 +14,7 @@ export default async function RootLayout({
   const user = session ? JSON.parse(session.value) : null;
   return (
     <html lang="fr">
-      <body>
+      <body className={inter.className}>
         <header
           style={{
             background: '#1B8C3E',
