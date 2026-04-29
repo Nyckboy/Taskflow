@@ -63,6 +63,7 @@ export async function DELETE(
     return NextResponse.json({ error: 'Invalid project id' }, { status: 400 });
   }
 
+  
   await prisma.project.delete({
     where: { id: numId },
   });
