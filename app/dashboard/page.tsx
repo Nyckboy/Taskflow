@@ -1,8 +1,9 @@
 import { prisma } from '@/lib/prisma';
+import type { Project } from '@prisma/client';
 import AddProjectForm from './AddProjectForm';
 import { deleteProject } from '../actions/projects';
 export default async function DashboardPage() {
-  const projects = await prisma.project.findMany({
+  const projects: Project[] = await prisma.project.findMany({
     orderBy: { createdAt: 'desc' },
   });
   return (
