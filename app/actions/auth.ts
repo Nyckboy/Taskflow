@@ -1,12 +1,27 @@
 'use server';
 
+import fs from 'fs';
+import path from 'path';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+const DB_PATH = path.join(process.cwd(), 'db.json');
+
+function readDB() {
+  const data = JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
+  return data;
+}
 
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  if (email !== 'admin@taskflow.com' || password !== 'password123') {
+
+  const db = readDB();
+  const user = db.users.find(
+    (user: any) => user.email === email && user.password === password
+  );
+
+  if (!user) {
     return { error: 'Email ou mot de passe incorrect' };
   }
 
@@ -14,8 +29,8 @@ export async function login(prevState: any, formData: FormData) {
   cookieStore.set(
     'session',
     JSON.stringify({
-      email,
-      name: 'Admin',
+      email: user.email,
+      name: user.name,
       role: 'admin',
     }),
     {
